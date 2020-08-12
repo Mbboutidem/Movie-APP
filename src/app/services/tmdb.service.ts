@@ -36,6 +36,11 @@ export class TmdbService {
     return this._http.get(`${Urlkey}/movie/top_rated?api_key=${ApiKey}&language=en-Us&page=${page}`)
     .pipe(map((res: any) => <Movie[]>res.results));
   }
+  //movie details
+  fetchMoviedetails(id: number){
+    const append = '&append_to_response=credits';
+    return this._http.get<Movie>(`${Urlkey}/movie/${id}?api_key=${ApiKey}&language=en-Us${append}`);
+  }
   //https://api.themoviedb.org/3/genre/movie/list?api_key=<<api_key>>&language=en-US
   fetchGenresMovies(){
     return this._http.get(`${Urlkey}/genre/movie/list?api_key=${ApiKey}&language=en-Us`)

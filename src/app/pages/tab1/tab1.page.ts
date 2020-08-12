@@ -62,7 +62,7 @@ export class Tab1Page implements OnInit {
        this.tmdb.fetcUpcomingMovies(this.pageNumber).subscribe(resp => {
          this.movieData = this.movieData.concat(resp);
         this.isDataload = true;
-        console.log(this.movieData)
+        // console.log(this.movieData)
        }); break;
        case "popular":
          this.selectCategory = "popular";
@@ -96,9 +96,14 @@ export class Tab1Page implements OnInit {
   }
   //
   MovieDetail(id: number){
-    this.router.navigate(['movie-detail', id]);
+    this.router.navigate(['movie-details', id]);
   }
-loadMovies(){
+  //search Movies
+  searchMovies(){
+    this.router.navigate(['search']);
+  }
+  
+  loadMovies(){
   this.pageNumber = this.pageNumber++;
   this.getMovies();
 }
