@@ -1,0 +1,59 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Home
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content padding>
+  <!-- <div class="segment-content">
+    <div class="category-content" [ngClass]="{'active': selectCategory == 'popular'}" (click)="changeCategory('popular');">
+      <span>Popular</span>
+    </div>
+    <div class="category-content" [ngClass]="{'active': selectCategory == 'topRated'}" (click)="changeCategory('topRated');">
+      <span>Top Rated</span>
+    </div>
+    <div class="category-content" [ngClass]="{'active': selectCategory == 'nowPlaying'}" (click)="changeCategory('nowPlaying');">
+      <span>Now Playing</span>
+    </div>
+    <div class="category-content" [ngClass]="{'active': selectCategory == 'upcoming'}" (click)="changeCategory('upcoming');">
+      <span>Upcoming</span>
+    </div>
+  </div> -->
+  <!--  -->
+  <h1 *ngIf="movieData && selectCategory == 'popular'">Popular</h1>
+  <h1 *ngIf="movieData && selectCategory == 'top'">Top</h1>
+  <h1 *ngIf="movieData && selectCategory == 'upcoming'">Upcoming</h1>
+
+  <div class="movies-flex" *ngIf="movieData">
+    <div class="movie" *ngFor="let movie of movieData" (click)="MovieDetail(movie.id)">
+      <div class="poster">
+        <img *ngIf="movie.poster_path" class="poster" [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path">
+        <img *ngIf="movie.poster_path" class="poster-effect" [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path">
+      </div>
+      <div class="title">{{ movie.title }}</div>
+      <div class="year">{{ movie.release_date | date:'yyyy' }}</div>
+      <div class="vote"><ion-icon name="star"></ion-icon><b>{{ movie.vote_average }}</b>/15</div>
+    </div>
+  </div>
+  
+  <div class="content-fullscreen-message" *ngIf="movieData && movieData.length == 0">
+    <h2>An error has occurred, no movies found</h2>
+  </div>
+
+  <ion-button *ngIf="movieData && movieData.length > 0 && pageNumber < 5" expand="full" size="large" fill="clear" (click)="loadMovies()">Ver más</ion-button>
+
+  <!--  -->
+
+
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite) = "loadMovies()">
+    <ion-infinite-scroll-content
+      loadingSpinner="circles">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+    
+</ion-content>
+
