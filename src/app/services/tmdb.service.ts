@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { map, delay } from 'rxjs/operators';
 import { Movie } from '../models/movie';
 import { Observable } from 'rxjs';
+import { Person } from '../models/person';
 
 const Urlkey = environment.UrlKey;
 const ApiKey = environment.ApiKey;
@@ -41,6 +42,12 @@ export class TmdbService {
     const append = '&append_to_response=credits';
     return this._http.get<Movie>(`${Urlkey}/movie/${id}?api_key=${ApiKey}&language=en-Us${append}`);
   }
+  //person details
+  fetchPersonDetails(id: number){
+    const append = '&append_to_response=credits';
+    return this._http.get<Person>(`${Urlkey}/person/${id}?api_key=${ApiKey}&language=en-Us${append}`)
+  }
+  
   //https://api.themoviedb.org/3/genre/movie/list?api_key=<<api_key>>&language=en-US
   fetchGenresMovies(){
     return this._http.get(`${Urlkey}/genre/movie/list?api_key=${ApiKey}&language=en-Us`)

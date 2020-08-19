@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot = "start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{personDetails.name}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <div class="profile-photo" *ngIf="personDetails">
+    <img *ngIf="personDetails.profile_path" class="profile-photo" [src]="'https://image.tmdb.org/t/p/w500' + personDetails.profile_path">
+    <img *ngIf="personDetails.profile_path" class="profile-photo-effect" [src]="'https://image.tmdb.org/t/p/w500' + personDetails.profile_path">
+  </div>
+
+  <div class="basic-data">
+    <h1>{{ personDetails?.name }}</h1>
+    <p *ngIf="personDetails?.birthday"><b>{{personDetails?.birthday | date:'dd/MM/yyyy' }} </b> <span *ngIf="personDetails?.deathday"> ({{personDetails?.deathday | date:'dd/MM/yyyy' }})</span></p>
+    <p *ngIf="personDetails?.place_of_birth">{{personDetails?.place_of_birth }}</p>  
+  </div>
+
+  <div class="clearfix"></div>
+
+  <div class="biography" *ngIf="personDetails?.biography">
+    <h1><ion-icon name="contact"></ion-icon> Biography</h1>
+    <div>{{personDetails?.biography }}</div>
+  </div>
+
+  <div class="movies" *ngIf="personDetails?.credits?.cast && personDetails?.credits?.cast.length > 0">
+    <h1><ion-icon name="ios-film"></ion-icon> Filmography</h1>
+    <ion-virtual-scroll [items]="personDetails?.credits?.cast">
+      <div class="movie" *virtualItem="let item" (click)="movieDetails(item.id)">
+        <ion-icon class="arrow" name="arrow-forward"></ion-icon>
+        <div class="poster">
+          <img *ngIf="item.poster_path" class="poster" [src]="'https://image.tmdb.org/t/p/w500' + item.poster_path">
+          <img *ngIf="item.poster_path" class="poster-effect" [src]="'https://image.tmdb.org/t/p/w500' + item.poster_path">
+        </div>
+        <div class="data">
+          <div class="title">{{item.title }}</div>
+          <div class="year">{{item.release_date | date:'yyyy' }}</div>
+        </div>
+      </div>
+    </ion-virtual-scroll>
+  </div>
+  
+</ion-content>

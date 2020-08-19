@@ -16,7 +16,7 @@ export class MovieDetailsPage implements OnInit {
   constructor(
     private tmdb: TmdbService,
     public router: Router,
-    private track: TrackService,
+    private trk: TrackService,
     private activateRou: ActivatedRoute,
     ) 
     { }
@@ -29,11 +29,14 @@ export class MovieDetailsPage implements OnInit {
   getMovieDetails(id: number){
     this.tmdb.fetchMoviedetails(id).subscribe(resp => {
       this.movieData = resp;
+      this.trk.viewMovie(id, this.movieData.title);
       console.log(this.movieData);
     })
   }
-  onPersonDetail(id: number) {
-    this.router.navigate(['person-detail', id]);
+  
+  PersonInfo(id: number) {
+    // this.tmdb.fetchMoviedetails = id;
+    this.router.navigate(['person-info', id]);
   }
 
 }
